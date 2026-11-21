@@ -43,20 +43,64 @@ Projekt nie ma partnerstw z instytucjami organizującymi wyzwanie. Dane w makiet
 - Wyszukiwanie w sieci: wymienny adapter ograniczony do domen z katalogu źródeł (planowany Firecrawl)
 - Frontend: React, TanStack Router, TanStack Query, shadcn/ui, Tailwind CSS v4
 - Wtyczka do przeglądarki Chrome
-- Chmura: GCP (region europe-central2) i Cloudflare
+- Hosting: na czas prac serwer zespołu za Cloudflare; docelowo GCP w UE (aplikacja w europe-central2, modele z Vertex AI)
 
 Model językowy i dostawcę wyszukiwania można wymienić bez przebudowy systemu. Ten sam rdzeń jest dostępny przez API oraz jako serwer MCP.
 
+## Działające środowiska
+
+`prd` to wersja z gałęzi `main`, `dev` z gałęzi `develop`. Na razie to szkielety aplikacji: działa wdrożenie, baza danych i kolejka zadań, a funkcje sprawdzania dopiero powstają.
+
+### Aplikacja webowa i API
+
+| Nazwa | Wersja | Przeznaczenie | Link |
+|---|---|---|---|
+| Aplikacja webowa | prd | aplikacja dla obywateli (bootstrap: stan API; docelowo formularz sprawdzania twierdzeń) | [meritum.gburek.app](https://meritum.gburek.app) |
+| Aplikacja webowa | dev | aplikacja dla obywateli (bootstrap: stan API; docelowo formularz sprawdzania twierdzeń) | [meritum-dev.gburek.app](https://meritum-dev.gburek.app) |
+| API | prd | dokumentacja OpenAPI (Swagger UI) | [meritum.gburek.app/api/docs](https://meritum.gburek.app/api/docs) |
+| API | dev | dokumentacja OpenAPI (Swagger UI) | [meritum-dev.gburek.app/api/docs](https://meritum-dev.gburek.app/api/docs) |
+| API: stan | prd | health: API, baza danych i środowisko | [meritum.gburek.app/api/v1/health](https://meritum.gburek.app/api/v1/health) |
+| API: stan | dev | health: API, baza danych i środowisko | [meritum-dev.gburek.app/api/v1/health](https://meritum-dev.gburek.app/api/v1/health) |
+
+### Makiety platform
+
+| Nazwa | Wersja | Przeznaczenie | Link |
+|---|---|---|---|
+| Makieta X | prd | makieta platformy do demo wtyczki | [meritum-x.gburek.app](https://meritum-x.gburek.app) |
+| Makieta X | dev | makieta platformy do demo wtyczki | [meritum-x-dev.gburek.app](https://meritum-x-dev.gburek.app) |
+| Makieta Facebook | prd | makieta platformy do demo wtyczki | [meritum-facebook.gburek.app](https://meritum-facebook.gburek.app) |
+| Makieta Facebook | dev | makieta platformy do demo wtyczki | [meritum-facebook-dev.gburek.app](https://meritum-facebook-dev.gburek.app) |
+| Makieta Instagram | prd | makieta platformy do demo wtyczki | [meritum-instagram.gburek.app](https://meritum-instagram.gburek.app) |
+| Makieta Instagram | dev | makieta platformy do demo wtyczki | [meritum-instagram-dev.gburek.app](https://meritum-instagram-dev.gburek.app) |
+| Makieta Reddit | prd | makieta platformy do demo wtyczki | [meritum-reddit.gburek.app](https://meritum-reddit.gburek.app) |
+| Makieta Reddit | dev | makieta platformy do demo wtyczki | [meritum-reddit-dev.gburek.app](https://meritum-reddit-dev.gburek.app) |
+| Makieta TikTok | prd | makieta platformy do demo wtyczki | [meritum-tiktok.gburek.app](https://meritum-tiktok.gburek.app) |
+| Makieta TikTok | dev | makieta platformy do demo wtyczki | [meritum-tiktok-dev.gburek.app](https://meritum-tiktok-dev.gburek.app) |
+
+### Wtyczka Chrome
+
+| Nazwa | Wersja | Przeznaczenie | Link |
+|---|---|---|---|
+| Wtyczka Chrome | prd | zip do załadowania w chrome://extensions (artefakt `meritum-extension-prd` w przebiegu CI) | [przebiegi CI na `main`](https://github.com/Meritum-HackNation2026/meritum-extension/actions/workflows/ci.yml?query=branch%3Amain+is%3Asuccess) |
+| Wtyczka Chrome | dev | zip do załadowania w chrome://extensions (artefakt `meritum-extension-dev` w przebiegu CI) | [przebiegi CI na `develop`](https://github.com/Meritum-HackNation2026/meritum-extension/actions/workflows/ci.yml?query=branch%3Adevelop+is%3Asuccess) |
+
 ## Repozytoria
 
-Repozytoria są na razie prywatne. Repozytoria z kodem otworzymy dla jury.
+Repozytoria są na razie prywatne, więc linki działają dla członków organizacji. Na koniec prac cały kod będzie publiczny, z instrukcją uruchomienia przez `docker compose up`.
 
-- `meritum-design-system`: system projektowy, znak, tokeny, komponenty, kontrakty danych, teksty interfejsu i makiety platform do demo.
-- `meritum-core`: wspólne kontrakty zadań, porty i adaptery backendu i workerów.
-- `meritum-infra`: infrastruktura i wdrożenie.
-- `meritum-monorepo`: repozytorium zbiorcze, które łączy pozostałe jako submoduły git.
-- `meritum-backend`, `meritum-worker`, `meritum-extension`: utworzone, jeszcze puste.
+| Repozytorium | Zawartość |
+|---|---|
+| [meritum-backend](https://github.com/Meritum-HackNation2026/meritum-backend) | API w FastAPI; zleca długie operacje workerom przez DBOS |
+| [meritum-worker](https://github.com/Meritum-HackNation2026/meritum-worker) | workery DBOS do długich operacji w tle, na PostgreSQL |
+| [meritum-core](https://github.com/Meritum-HackNation2026/meritum-core) | kod wspólny backendu i workerów: kontrakty, porty, adaptery |
+| [meritum-frontend](https://github.com/Meritum-HackNation2026/meritum-frontend) | aplikacja webowa (React, pnpm), serwowana przez nginx |
+| [meritum-extension](https://github.com/Meritum-HackNation2026/meritum-extension) | wtyczka Chrome MV3 (WXT, React) |
+| [meritum-mocks](https://github.com/Meritum-HackNation2026/meritum-mocks) | makiety X, Facebooka, Instagrama, Reddita i TikToka do demo wtyczki |
+| [meritum-marketing](https://github.com/Meritum-HackNation2026/meritum-marketing) | deck, film i grafiki na konkurs MSZ |
+| [meritum-design-system](https://github.com/Meritum-HackNation2026/meritum-design-system) | dokument produktowy, system projektowy, teksty, źródłowe makiety |
+| [meritum-infra](https://github.com/Meritum-HackNation2026/meritum-infra) | runnery GitHub Actions i wspólna platforma na serwerze zespołu |
+| [meritum-monorepo](https://github.com/Meritum-HackNation2026/meritum-monorepo) | repozytorium zbiorcze, łączy pozostałe jako submoduły git |
 
 ## English summary
 
-Meritum is a civic disinformation radar, built as a prototype for HackNation 2026 in the MSZ (Polish Ministry of Foreign Affairs) "Prawdowid" challenge. A citizen pastes text or a link into a web form, or clicks "Sprawdź" (Check) under a post in the Chrome extension; both channels use the same verification core. The system extracts checkable claims, searches an audited corpus of official documents, public data and fact-checks, plus live web search limited to catalogue domains, and returns one of five verdicts per claim: confirmed, false, misleading, insufficient evidence, or not verifiable. Every finding cites a verbatim fragment with title, publisher, date and link, and the strength of the verdict follows from explicit premises. When evidence is missing, the system abstains and says what it could not establish; unresolved and repeated questions go to a moderator queue. Instructions found in checked content are ignored and logged, and every check leaves an audit record. Code repositories are private for now and will be opened for the jury.
+Meritum is a civic disinformation radar, built as a prototype for HackNation 2026 in the MSZ (Polish Ministry of Foreign Affairs) "Prawdowid" challenge. A citizen pastes text or a link into a web form, or clicks "Sprawdź" (Check) under a post in the Chrome extension; both channels use the same verification core. The system extracts checkable claims, searches an audited corpus of official documents, public data and fact-checks, plus live web search limited to catalogue domains, and returns one of five verdicts per claim: confirmed, false, misleading, insufficient evidence, or not verifiable. Every finding cites a verbatim fragment with title, publisher, date and link, and the strength of the verdict follows from explicit premises. When evidence is missing, the system abstains and says what it could not establish; unresolved and repeated questions go to a moderator queue. Instructions found in checked content are ignored and logged, and every check leaves an audit record. Repositories are private for now; all code goes public at the end of development. Working dev and prd links are listed above.
