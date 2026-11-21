@@ -84,6 +84,13 @@ Model językowy i dostawcę wyszukiwania można wymienić bez przebudowy systemu
 | Wtyczka Chrome | prd | zip do załadowania w chrome://extensions (artefakt `meritum-extension-prd` w przebiegu CI) | [przebiegi CI na `main`](https://github.com/Meritum-HackNation2026/meritum-extension/actions/workflows/ci.yml?query=branch%3Amain+is%3Asuccess) |
 | Wtyczka Chrome | dev | zip do załadowania w chrome://extensions (artefakt `meritum-extension-dev` w przebiegu CI) | [przebiegi CI na `develop`](https://github.com/Meritum-HackNation2026/meritum-extension/actions/workflows/ci.yml?query=branch%3Adevelop+is%3Asuccess) |
 
+### Discord
+
+| Nazwa | Wersja | Przeznaczenie | Link |
+|---|---|---|---|
+| Discord: Meritum | prd | dodanie aplikacji do konta albo serwera; komendy /sprawdz i „Sprawdź w Meritum” przy wiadomości | [zainstaluj „Meritum”](https://discord.com/oauth2/authorize?client_id=1573692006398693396) |
+| Discord: Meritum dev | dev | dodanie aplikacji do konta albo serwera; komendy /sprawdz i „Sprawdź w Meritum” przy wiadomości | [zainstaluj „Meritum dev”](https://discord.com/oauth2/authorize?client_id=1573690220782559332) |
+
 ## Repozytoria
 
 Repozytoria są na razie prywatne, więc linki działają dla członków organizacji. Na koniec prac cały kod będzie publiczny, z instrukcją uruchomienia przez `docker compose up`.
