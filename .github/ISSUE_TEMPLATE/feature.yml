@@ -1,0 +1,81 @@
+name: Feature
+description: Nowa możliwość albo przypadek użycia (historia US-XXX-NN, funkcja F-NN).
+title: "feat: "
+labels: ["type: feature", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Opisz **co** i **dlaczego**, nie jak. Tytuł to efekt prostymi słowami, np.
+        `feat: formularz przyjmuje link i pobiera tylko publiczne strony`.
+        Konwencję opisuje skill `meritum-issue-writing` w meritum-monorepo.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: >-
+        Kto tego potrzebuje, w jakiej sytuacji i ile go to dziś kosztuje. Podaj historie
+        (US-XXX-NN), funkcje (F-NN) i ADR z dokumentu produktowego.
+      placeholder: |
+        Historie: US-SPR-07. Funkcje: F-06. ADR-12.
+        Obywatel chce wkleić link zamiast przepisywać treść ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: >-
+        Zachowanie po zmianie, z punktu widzenia użytkownika. Gherkin: słowa kluczowe po
+        angielsku, treść kroków po polsku; scenariusz trafia do behave bez zmian.
+      render: gherkin
+      placeholder: |
+        Scenario: link do strony za logowaniem
+          Given obywatel wkleja link do posta na Facebooku
+          When system próbuje pobrać stronę
+          Then wynik to "Problem techniczny" z prośbą o wklejenie tekstu
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Criteria of success
+      description: >-
+        Lista do odhaczenia: zachowanie, testy (behave, pytest, `node --test`), docstringi z ID
+        historii i funkcji, dokumentacja, testy architektury. Każdy punkt sprawdzalny.
+      placeholder: |
+        - [ ] `src/meritum_core/corpus/fetcher.py` blokuje adresy prywatne i lokalne
+        - [ ] scenariusz behave `features/checks.feature` i testy pytest przechodzą
+        - [ ] docstringi z `Features: US-SPR-07, F-06`; README zaktualizowane
+        - [ ] testy architektury i `scripts/check_conventions.py` przechodzą
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - checks
+        - channels
+        - evidence
+        - corpus
+        - security
+        - moderation
+        - observability
+        - deploy
+        - notifications
+        - architecture
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      options:
+        - "S: kilka godzin"
+        - "M: około pół dnia"
+        - "L: więcej (rozważ podział)"
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Poza zakresem, pytania, ograniczenia. Zależności jako `Depends on <repo>#<n>`, jedna na wiersz.

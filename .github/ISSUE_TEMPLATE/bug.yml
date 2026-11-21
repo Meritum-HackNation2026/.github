@@ -1,0 +1,53 @@
+name: Bug
+description: Coś, co działało albo powinno działać, nie działa.
+title: "bug: "
+labels: ["type: bug", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Luka bezpieczeństwa? **Nie** zgłaszaj jej tutaj; użyj prywatnego zgłoszenia (Security advisory).
+        Tytuł to zaobserwowany objaw, np. `bug: karta pokazuje siłę przy braku wystarczających dowodów`.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: >-
+        Kto trafił na błąd i przy czym, środowisko (dev / prd / lokalnie), commit albo wersja,
+        kroki do odtworzenia, co się stało, a co powinno.
+      placeholder: |
+        Środowisko: meritum-dev.gburek.app, commit abc1234
+        1. ...
+        Jest: ...
+        Powinno być: ...
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Why is it bad
+      description: Skutek (zły werdykt, wyciek danych, blokada, kosmetyka), kogo dotyczy, jak często, czy jest obejście.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - "critical: zły werdykt, wyciek danych, bezpieczeństwo, utrata danych"
+        - "major: funkcja nie działa i nie ma obejścia"
+        - "minor: jest obejście"
+        - "trivial: kosmetyka"
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: Recommended / proposed fix
+      description: Hipoteza przyczyny, kod (`ścieżka/plik.py:42`), szkic poprawki. Opcjonalnie.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Bez sekretów i bez niezamaskowanych danych osobowych.
+      render: text
