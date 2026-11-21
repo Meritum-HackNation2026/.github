@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Luka bezpieczeństwa
+    url: https://docs.github.com/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability
+    about: Zgłoś prywatnie przez zakładkę Security repozytorium, nigdy w publicznym zgłoszeniu.
+  - name: Dokument produktowy (historie i funkcje)
+    url: https://github.com/Meritum-HackNation2026/meritum-design-system/tree/main/docs
+    about: Historie US-XXX-NN, funkcje F-NN i ADR, z których powstają zgłoszenia.

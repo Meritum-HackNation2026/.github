@@ -1,0 +1,55 @@
+name: Chore
+description: Narzędzia, CI, zależności, refaktoryzacja, dokumentacja techniczna.
+title: "chore: "
+labels: ["type: chore", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tytuł to efekt, np. `chore: kontrakty sprawdzania podzielone na moduły do 250 linii`.
+        Sama dokumentacja: zmień prefiks na `docs:` i etykietę na `type: docs`.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Dlaczego to potrzebne teraz i co kosztuje brak zmiany. Linki do ADR i reguł architektury.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: Co jest prawdą po zmianie (Gherkin mile widziany, nieobowiązkowy).
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Criteria of success
+      description: Sprawdzalna lista; zmiana bez zmiany zachowania wymaga zielonych testów przed i po.
+      placeholder: |
+        - [ ] ...
+        - [ ] CI zielone, testy architektury przechodzą
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - checks
+        - channels
+        - evidence
+        - corpus
+        - security
+        - moderation
+        - observability
+        - deploy
+        - notifications
+        - architecture
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Ryzyka, poza zakresem, zależności (`Depends on <repo>#<n>`).
