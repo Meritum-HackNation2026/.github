@@ -8,51 +8,55 @@
 
 <h1 align="center">Meritum</h1>
 
-<p align="center">Meritum — obywatelski radar dezinformacji oraz scamu</p>
+<p align="center">Meritum — obywatelski radar dezinformacji</p>
 
-Meritum to prototyp przygotowany na hackathon HackNation 2026. Działa jako wtyczka do przeglądarki na platformach społecznościowych (X, Facebook, Instagram, Reddit, TikTok) i dodaje pod postami oraz reklamami kontekst, który powstaje niezależnie od samych platform.
+Meritum to prototyp przygotowany na hackathon HackNation 2026 w konkursie MSZ „Prawdowid”. Pozwala sprawdzić pogłoskę albo doniesienie tak łatwo, jak wysłać wiadomość: wklejasz tekst lub link i dostajesz ocenę każdego twierdzenia razem ze źródłami, na których się opiera.
 
 ## Problem
 
-Manipulacyjny post i fałszywa reklama z wizerunkiem znanej osoby mają podobną budowę. Pojedyncza treść jest zwykle fragmentem większej operacji: wiele kopii, krótki czas życia, skoordynowane konta i domeny, które szybko się zmieniają. Sprostowanie, jeśli w ogóle powstaje, trafia gdzie indziej niż czytelnik. Zgłoszona reklama znika, a następnego dnia wraca pod nowym adresem i razem z nią przepadają ślady.
+Obywatel trafia na pogłoskę w feedzie albo w wiadomości od znajomych. Sprostowanie często już istnieje, ale w innym miejscu: w serwisie fact-checkingowym, w komunikacie urzędu, w akcie prawnym. Generatywna AI odpowiada płynnie i pewnie, ale płynność nie jest dowodem, a odpowiedź bez źródła trudno sprawdzić. Część treści jest prawdziwa, ale nieaktualna, część łączy poprawne dane z błędnym wnioskiem, a o części nikt jeszcze rzetelnie nie napisał.
 
 ## Jak to działa
 
-1. Użytkownik zgłasza w kilku kliknięciach manipulację albo podejrzaną reklamę.
-2. System porównuje zgłoszenie z wcześniejszymi (podobieństwo obrazu i tekstu, szablon strony docelowej, domeny i przekierowania) i dołącza je do kampanii, do której należy.
-3. AI przygotowuje szkic notatki kontekstowej z uwag użytkowników, analizy treści i źródeł z różnych stron sporu. Linki do źródeł są obowiązkowe, a notatka bez źródła nie może zostać opublikowana.
-4. Notatka ukazuje się dopiero wtedy, gdy za pomocną uznają ją osoby z grup, które zwykle oceniają treści inaczej. Sama większość głosów nie wystarcza, więc farma botów nie może jej przepchnąć ani zakopać.
-5. Na fałszywej reklamie wtyczka pokazuje ostrzeżenie o oszustwie i kampanię, z której pochodzi. W chwili zobaczenia reklamy zapisuje dowód: zrzut ekranu, adres, łańcuch przekierowań i czas. Dowód zostaje także wtedy, gdy reklama zniknie.
+1. **Dwa kanały, jedna logika.** Podstawowym kanałem jest formularz WWW: wklejasz tekst albo link. Drugim jest przycisk „Sprawdź” we wtyczce Chrome pod postem na platformie społecznościowej. Oba kanały wysyłają zapytanie do tego samego rdzenia weryfikacji, więc to samo pytanie daje ten sam wynik.
+2. **Twierdzenia.** System wyodrębnia z treści twierdzenia, które da się sprawdzić, i oddziela je od opinii.
+3. **Źródła.** Szuka w opisanym i audytowalnym korpusie: dokumenty urzędowe, dane publiczne i publikacje organizacji fact-checkingowych. Świeże publikacje dociąga wyszukiwaniem w sieci, ale tylko w domenach z katalogu źródeł. Każdy dokument ma datę publikacji i datę pobrania.
+4. **Werdykt.** Dla każdego twierdzenia jeden z pięciu wyników: potwierdzone, fałszywe, wprowadzające w błąd, brak wystarczających dowodów albo nie podlega weryfikacji. Awaria techniczna, prośba o doprecyzowanie i pytanie poza zakresem nie są werdyktami i są komunikowane osobno.
+5. **Cytaty.** Każde ustalenie prowadzi do źródła: tytuł, wydawca, data, link i dosłowny fragment. Cytatu, którego nie ma w tekście źródła, system odrzuca. Wyjaśnienie modelu jest oddzielone od materiału źródłowego.
+6. **Siła podstawy.** Wynika z jawnych przesłanek: liczby niezależnych źródeł, udziału źródeł urzędowych, ich aktualności i zgodności. Sprzeczne źródła są pokazywane jako rozbieżność, bez arbitralnej pewności.
+7. **Wstrzymanie się.** Gdy dowodów brakuje, system nie rozstrzyga i mówi, czego nie udało się ustalić.
+8. **Moderatorzy.** Sprawy nierozstrzygnięte i powtarzające się pytania bez odpowiedzi trafiają do kolejki moderatorów jako jedna sprawa na grupę podobnych zgłoszeń. System odróżnia zalecenie przekazania od faktycznego przekazania.
+9. **Bezpieczeństwo i ślad.** Instrukcje znalezione w sprawdzanych treściach nie zmieniają zasad działania: są ignorowane i zapisywane jako zdarzenie. Każde sprawdzenie ma zapis przebiegu (pytanie z zamaskowanymi danymi osobowymi, czas, źródła, wynik, użyty model, koszt) z określonym terminem usunięcia.
 
-AI pisze szkic, a o publikacji decydują ludzie. Notatki wyjaśniają i cytują źródła, nie oceniają ludzi.
+AI pomaga zrozumieć pytanie, przeszukać i porównać materiały oraz napisać odpowiedź prostym językiem. Nie rozstrzyga sama: werdykt wynika z cytatów i przesłanek, które użytkownik może sprawdzić.
 
-## Wyzwania HackNation 2026
+## Wyzwanie HackNation 2026
 
-Ten sam produkt odpowiada na dwa wyzwania:
+MSZ „Prawdowid”: szybka i łatwa weryfikacja informacji oparta na wiarygodnych źródłach. Narzędzie dla obywatela, także o niskich kompetencjach cyfrowych, które pokazuje podstawy odpowiedzi i uczciwie wstrzymuje się od rozstrzygnięcia, gdy materiały są niewystarczające.
 
-- MSZ „Prawdowid”: narzędzie AI, które pomaga odróżnić fakt od manipulacji, dotrzeć do wiarygodnych źródeł i świadomie oceniać napotykane treści. Meritum odpowiada notatką kontekstową z obowiązkowymi źródłami, pokazaniem, z której strony sporu pochodzą media, i nazwaniem techniki manipulacji.
-- NASK „Kolekcjoner fejków”: fałszywe reklamy z wizerunkiem znanych osób szybko znikają, zmieniają formę i wracają pod nowymi adresami, a pojedynczy materiał bywa fragmentem dużo większej kampanii. Meritum łączy zgłoszenia w kampanie, pokazuje ich warianty i domeny na jednej osi czasu i zachowuje dowody, zanim reklama zniknie.
-
-Projekt nie ma partnerstw z instytucjami organizującymi wyzwania. Wszystkie liczby pokazywane w demo są symulowane.
+Projekt nie ma partnerstw z instytucjami organizującymi wyzwanie. Dane w makietach są fikcyjne. Wyniki testów opublikujemy razem z danymi, które pozwalają je odtworzyć.
 
 ## Technologie
 
 - Backend: Python, FastAPI, FastMCP, Pydantic, Pydantic AI, DBOS (trwałe workflowy)
 - Baza danych: PostgreSQL z pgvector
+- Wyszukiwanie w sieci: wymienny adapter ograniczony do domen z katalogu źródeł (planowany Firecrawl)
 - Frontend: React, TanStack Router, TanStack Query, shadcn/ui, Tailwind CSS v4
 - Wtyczka do przeglądarki Chrome
-- Chmura: GCP i Cloudflare
+- Chmura: GCP (region europe-central2) i Cloudflare
 
-Ten sam silnik weryfikacji ma być dostępny przez API oraz jako serwer MCP, żeby redakcje i analitycy mogli z niego korzystać bez instalowania wtyczki.
+Model językowy i dostawcę wyszukiwania można wymienić bez przebudowy systemu. Ten sam rdzeń jest dostępny przez API oraz jako serwer MCP.
 
 ## Repozytoria
 
-Repozytoria z kodem są na razie prywatne.
+Repozytoria są na razie prywatne. Repozytoria z kodem otworzymy dla jury.
 
-- `meritum-design-system`: system projektowy, znak, tokeny, komponenty, teksty interfejsu i makiety platform do demo.
+- `meritum-design-system`: system projektowy, znak, tokeny, komponenty, kontrakty danych, teksty interfejsu i makiety platform do demo.
+- `meritum-core`: wspólne kontrakty zadań, porty i adaptery backendu i workerów.
 - `meritum-infra`: infrastruktura i wdrożenie.
 - `meritum-monorepo`: repozytorium zbiorcze, które łączy pozostałe jako submoduły git.
+- `meritum-backend`, `meritum-worker`, `meritum-extension`: utworzone, jeszcze puste.
 
 ## English summary
 
-Meritum is a civic radar for disinformation and scams, built as a prototype for HackNation 2026. A browser extension lets people report manipulative posts and fake ads on social platforms. Each report is linked to the wider campaign it belongs to. An AI drafts a context note that must cite sources, and the note is published only when people who usually disagree rate it helpful. Fake ads get a scam warning, and the extension preserves evidence (screenshot, URL, redirect chain, time) before the ad disappears. The project targets two challenges: MSZ "Prawdowid" (fact versus manipulation, credible sources) and NASK "Kolekcjoner fejków" (fake celebrity ads that vanish and return as part of larger campaigns). Code repositories are private for now.
+Meritum is a civic disinformation radar, built as a prototype for HackNation 2026 in the MSZ (Polish Ministry of Foreign Affairs) "Prawdowid" challenge. A citizen pastes text or a link into a web form, or clicks "Sprawdź" (Check) under a post in the Chrome extension; both channels use the same verification core. The system extracts checkable claims, searches an audited corpus of official documents, public data and fact-checks, plus live web search limited to catalogue domains, and returns one of five verdicts per claim: confirmed, false, misleading, insufficient evidence, or not verifiable. Every finding cites a verbatim fragment with title, publisher, date and link, and the strength of the verdict follows from explicit premises. When evidence is missing, the system abstains and says what it could not establish; unresolved and repeated questions go to a moderator queue. Instructions found in checked content are ignored and logged, and every check leaves an audit record. Code repositories are private for now and will be opened for the jury.
