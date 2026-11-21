@@ -10,7 +10,7 @@
 
 <p align="center">Meritum — obywatelski radar dezinformacji</p>
 
-Meritum to prototyp przygotowany na hackathon HackNation 2026 w konkursie MSZ „Prawdowid”. Pozwala sprawdzić pogłoskę albo doniesienie tak łatwo, jak wysłać wiadomość: wklejasz tekst lub link i dostajesz ocenę każdego twierdzenia razem ze źródłami, na których się opiera.
+Meritum to prototyp przygotowany na hackathon HackNation 2026 w konkursie MSZ „Prawdowid”. Meritum pozwala sprawdzić pogłoskę albo informację tak łatwo, jak wysłać wiadomość: wklejasz tekst lub link i dostajesz ocenę każdego twierdzenia razem ze źródłami, na których się opiera.
 
 ## Problem
 
@@ -18,9 +18,9 @@ Obywatel trafia na pogłoskę w feedzie albo w wiadomości od znajomych. Sprosto
 
 ## Jak to działa
 
-1. **Dwa kanały, jedna logika.** Podstawowym kanałem jest formularz WWW: wklejasz tekst albo link. Drugim jest przycisk „Sprawdź” we wtyczce Chrome pod postem na platformie społecznościowej. Oba kanały wysyłają zapytanie do tego samego rdzenia weryfikacji, więc to samo pytanie daje ten sam wynik.
+1. **Kilka kanałów, jedna logika.** Podstawowym kanałem jest formularz WWW: wklejasz tekst albo link. Konto nie jest potrzebne; logowanie kontem Google albo Microsoft jest opcjonalne i pozwala zachować historię. Drugim kanałem jest przycisk „Sprawdź” we wtyczce Chrome pod postem na platformie społecznościowej. Ten sam rdzeń obsługuje bota na Discordzie, a jeśli starczy czasu, także SMS. Wszystkie kanały wysyłają zapytanie do tego samego rdzenia weryfikacji, więc to samo pytanie daje ten sam wynik.
 2. **Twierdzenia.** System wyodrębnia z treści twierdzenia, które da się sprawdzić, i oddziela je od opinii.
-3. **Źródła.** Szuka w opisanym i audytowalnym korpusie: dokumenty urzędowe, dane publiczne i publikacje organizacji fact-checkingowych. Świeże publikacje dociąga wyszukiwaniem w sieci, ale tylko w domenach z katalogu źródeł. Każdy dokument ma datę publikacji i datę pobrania.
+3. **Źródła.** Szuka w opisanym i audytowalnym korpusie: serwisy urzędowe z listy organizatora oraz ustalenia fact-checkerów z Google Fact Check Tools API. Świeże publikacje dociąga wyszukiwaniem w sieci, ale tylko w domenach z katalogu źródeł. Każdy dokument ma datę publikacji i datę pobrania.
 4. **Werdykt.** Dla każdego twierdzenia jeden z pięciu wyników: potwierdzone, fałszywe, wprowadzające w błąd, brak wystarczających dowodów albo nie podlega weryfikacji. Awaria techniczna, prośba o doprecyzowanie i pytanie poza zakresem nie są werdyktami i są komunikowane osobno.
 5. **Cytaty.** Każde ustalenie prowadzi do źródła: tytuł, wydawca, data, link i dosłowny fragment. Cytatu, którego nie ma w tekście źródła, system odrzuca. Wyjaśnienie modelu jest oddzielone od materiału źródłowego.
 6. **Siła podstawy.** Wynika z jawnych przesłanek: liczby niezależnych źródeł, udziału źródeł urzędowych, ich aktualności i zgodności. Sprzeczne źródła są pokazywane jako rozbieżność, bez arbitralnej pewności.
@@ -92,7 +92,7 @@ Repozytoria są na razie prywatne, więc linki działają dla członków organiz
 |---|---|
 | [meritum-backend](https://github.com/Meritum-HackNation2026/meritum-backend) | API w FastAPI; zleca długie operacje workerom przez DBOS |
 | [meritum-worker](https://github.com/Meritum-HackNation2026/meritum-worker) | workery DBOS do długich operacji w tle, na PostgreSQL |
-| [meritum-core](https://github.com/Meritum-HackNation2026/meritum-core) | kod wspólny backendu i workerów: kontrakty, porty, adaptery |
+| [meritum-core](https://github.com/Meritum-HackNation2026/meritum-core) | kod wspólny backendu i workerów: kontrakty (jedyne źródło prawdy dla kontraktów danych), porty, adaptery |
 | [meritum-frontend](https://github.com/Meritum-HackNation2026/meritum-frontend) | aplikacja webowa (React, pnpm), serwowana przez nginx |
 | [meritum-extension](https://github.com/Meritum-HackNation2026/meritum-extension) | wtyczka Chrome MV3 (WXT, React) |
 | [meritum-mocks](https://github.com/Meritum-HackNation2026/meritum-mocks) | makiety X, Facebooka, Instagrama, Reddita i TikToka do demo wtyczki |
@@ -103,4 +103,4 @@ Repozytoria są na razie prywatne, więc linki działają dla członków organiz
 
 ## English summary
 
-Meritum is a civic disinformation radar, built as a prototype for HackNation 2026 in the MSZ (Polish Ministry of Foreign Affairs) "Prawdowid" challenge. A citizen pastes text or a link into a web form, or clicks "Sprawdź" (Check) under a post in the Chrome extension; both channels use the same verification core. The system extracts checkable claims, searches an audited corpus of official documents, public data and fact-checks, plus live web search limited to catalogue domains, and returns one of five verdicts per claim: confirmed, false, misleading, insufficient evidence, or not verifiable. Every finding cites a verbatim fragment with title, publisher, date and link, and the strength of the verdict follows from explicit premises. When evidence is missing, the system abstains and says what it could not establish; unresolved and repeated questions go to a moderator queue. Instructions found in checked content are ignored and logged, and every check leaves an audit record. Repositories are private for now; all code goes public at the end of development. Working dev and prd links are listed above.
+Meritum is a civic disinformation radar, built as a prototype for HackNation 2026 in the MSZ (Polish Ministry of Foreign Affairs) "Prawdowid" challenge. A citizen pastes text or a link into a web form, or clicks "Sprawdź" (Check) under a post in the Chrome extension; a Discord bot, and SMS if time allows, use the same verification core. The system extracts checkable claims, searches an audited corpus of official sites from the organiser's list and fact-checks from the Google Fact Check Tools API, plus live web search limited to catalogue domains, and returns one of five verdicts per claim: confirmed, false, misleading, insufficient evidence, or not verifiable. Every finding cites a verbatim fragment with title, publisher, date and link, and the strength of the verdict follows from explicit premises. When evidence is missing, the system abstains and says what it could not establish; unresolved and repeated questions go to a moderator queue. Instructions found in checked content are ignored and logged, and every check leaves an audit record. Code repositories are private for now; all repositories and the system go public at the end of development, with run instructions using one `docker compose up`. Working dev and prd links are listed above.
